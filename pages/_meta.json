@@ -1,9 +1,14 @@
 {
-  "index": "Introduction",
-  "another": "Another Page",
-  "advanced": "Advanced (A Folder)",
-  "about": {
-    "title": "About",
+  "index": {
+    "title": "Home",
+    "type": "page"
+  },
+  "overview": {
+    "title": "Overview",
+    "type": "page"
+  },
+  "solidity-api": {
+    "title": "Contracts",
     "type": "page"
   },
   "contact": {
