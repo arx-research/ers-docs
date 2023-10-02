@@ -1,0 +1,35 @@
+import Image from 'next/image'
+
+# System Architecture
+
+![Hello](/system_diagram.png)
+
+## Contracts
+
+### ChipRegistry
+Represents the entry point for any chip resolution actions. Since we will not be requiring complete standardization of Registrar contracts the Registry needs to be built such that any state changes are validated in the Registry contract. The ChipRegistry will be maintained by a consortium of manufacturers which have the ability to add new TSMs which can then add enrollments to the ChipRegistry via their TSMRegistrar
+
+### ManufacturerRegistry
+Manufacturers enroll their chips into this Registry. For each enrollment they provide the signing address of their certificate, chipModel, ellipticCurve, bootloaderApp.
+
+### ERSRegistry
+ENS-like fork which provides human readable names for contracts related to TSMs and Projects. Chips are immutably tied to an ERS name which provides uniqueness but also a path of ownership back to the TSM and thus Manufacturer.
+
+### TSMRegistry
+Tracks approved TSMs and acts as registrar of .ers domain name for ERSRegistry. The ability to add new TSMs (and thus create a new [tsm].ers namespace) is given by manufacturers. All TSM enrollments are also tracked in this contract.
+
+### TSMRegistrar
+Registrar through which all new Projects under the TSM name are launched. Registrar gives each project a [project].tsm.ers name and sets the owner to the ProjectRegistrar. This contract will track all enrollments made by a TSM.
+
+### TSMManager
+An optional and bespoke contract that a TSM can set to be the manager of their TSMRegistrar. This contract can be used to gate project enrollments under a TSM or enforce any other logic a TSM may want to enforce on project enrollments.
+
+### TSMRegistrarFactory
+Factory contract for TSMRegistrar. Called by TSMRegistry to create a TSMRegistrar for new TSMs.
+
+### ProjectRegistrar
+Entry point for users claiming chips. Can have custom code but is responsible for setting the ers name for each chip in its enrollment [chip].project.tsm.ers.
+
+### ServicesRegistry
+Keeps track of all services that a chip is subscribed to. Individual services are represented by an id and are linked to various records which indicate the type of media / data the record represents (ipfs address, https address, contract address, etc). The ServicesRegistry is also responsible for tracking the primary service for a chip.
+
