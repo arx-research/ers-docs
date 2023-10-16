@@ -7,6 +7,10 @@
     "title": "Overview",
     "type": "page"
   },
+  "scripts": {
+    "title": "Scripts",
+    "type": "page"
+  },
   "solidity-api": {
     "title": "Contracts",
     "type": "page"
@@ -14,7 +18,7 @@
   "contact": {
     "title": "Contact ↗",
     "type": "page",
-    "href": "https://twitter.com/shuding_",
+    "href": "https://arx.org/",
     "newWindow": true
   }
 }
