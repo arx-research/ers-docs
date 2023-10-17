@@ -42,3 +42,6 @@ In order for the claim to go through the chip must:
 2. Have the correct `ERSRegistry` state set by the `ProjectRegistrar`
 3. Have valid Manufacturer and project inclusion proofs
 4. Have valid certificates from the TSM
+
+## Example: Claiming a Chip
+For an example of claiming a chip see [Claiming A Chip](../../scripts/chip-claim.md) section in our scripts documentation.

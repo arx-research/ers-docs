@@ -14,7 +14,7 @@ MAINNET_SERVICE_CREATOR_PRIVATE_KEY=ac0974bec39a17e36ba4a6b4d238ff944bacb478cbed
 Replace the stand-in private keys (pulled from Hardhat) with the private key you wish to use. Make sure that you are using the correct private key for the __network__ you are deploying to.
 
 ## Executing the Script
-The script to create a service is located in `scripts/create-service.ts`. To execute the script run:
+The script to create a service is located in `tasks/serviceCreation.ts`. To execute the script run:
 ```bash
 yarn createService --network [network] --service-name [name] --content [content] --append-id [true/false]
 ```
