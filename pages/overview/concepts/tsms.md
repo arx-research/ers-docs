@@ -23,3 +23,6 @@ In order to add a project the following information must be provided:
 
 Once a project has been added you can see the project's information by calling `projectEnrollments` on the `ChipRegistry` and passing in the `ProjectRegistrar` address of the project. Additionally, this opens up the ability for end-users to claim chips from the project via the `ProjectRegistrar`.
 
+## Example: Creating a Project
+For an example of creating a project see [Creating A Project](../../scripts/create-project.md) section in our scripts documentation.
+
