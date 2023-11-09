@@ -2,6 +2,16 @@ import React from 'react'
 import { DocsThemeConfig } from 'nextra-theme-docs'
 
 const config: DocsThemeConfig = {
+  useNextSeoProps() {
+    return {
+      titleTemplate: '%s – ERS Documentation'
+    }
+  },
+  head: (
+    <>
+      <meta property="og:description" content="The Ethereum Reality Service is a set of smart contracts that enables decentralized authentication, claims, and redirection for secure chips." />
+    </>
+  ),
   logo: (
     <>
       <svg width="50" height="20" viewBox="0 0 50 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -17,7 +27,7 @@ const config: DocsThemeConfig = {
   // },
   docsRepositoryBase: 'https://github.com/arx-research/ers-docs',
   footer: {
-    text: 'Nextra Docs Template',
+    text: 'Ethereum Reality Service',
   },
 }
 
