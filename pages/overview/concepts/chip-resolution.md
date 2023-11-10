@@ -25,6 +25,7 @@ Step 2 is relatively easy, since an service address is a small amount of data it
 Storing all this information on-chain would be prohibitively expensive so we need to store it somewhere off-chain and be able to trust that we're getting the correct data to verify the chip is correctly enrolled.
 
 ## Fetching Off-Chain Data
+![resolution](../../../public/resolution.png)
 In order to fetch off-chain data we use the [EIP-3668 standard](https://eips.ethereum.org/EIPS/eip-3668), also known as CCIP-read. For a more general explainer of CCIP-read we encourage you to read the standard, but here we'll provide the series of steps as tailored to the ERS protocol:
 1. User requests chip resolution via a EIP-3668 enabled client, by passing in `chipId`
 2. Client takes `chipId` and passes to `resolveChipId` on the `ChipRegistry`

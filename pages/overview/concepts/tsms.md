@@ -24,5 +24,39 @@ In order to add a project the following information must be provided:
 Once a project has been added you can see the project's information by calling `projectEnrollments` on the `ChipRegistry` and passing in the `ProjectRegistrar` address of the project. Additionally, this opens up the ability for end-users to claim chips from the project via the `ProjectRegistrar`.
 
 ## Example: Creating a Project
-For an example of creating a project see [Creating A Project](../../scripts/create-project.md) section in our scripts documentation.
+For an example of creating a project see [Creating A Project](../../scripts/create-project.md) section in our scripts documentation. Additionally, see a step-by-step explainer of all the interactions required to create a project:
+
+![project-enrollment](../../../public/project_enrollment.png)
+1. TSM receives list of chipIds and enrollmentId from manufacturer
+2. Optional: TSM can check against the ManufacturerRegistry to verify that all chips have been correctly enrolled by manufacturer
+3. TSM signs public key of every chip with their own private key / public key pair (certificate)
+    - The key used to sign we call the projectPublicKey and is defined on a per project basis
+4. TSM signs resulting signature from Step 3 with its matching chip
+5. TSM places certificate in IPFS
+6. TSM deploys ProjectRegistrar with the following information (in whatever data structure they want):
+    - TSMRegistrar address
+    - ChipRegistry address
+7. TSM signs deployed ProjectRegistrar address with same key used to sign all the chips
+8. TSMManager calls addProject on its TSMRegistrar using its “owner” address and passing in
+    - Enrollment nameHash
+    - ProjectRegistrar address
+    - Project public key used to sign certificates (see Step 3 above)
+    - merkleRoot
+    - Transfer policy
+    - A signed message of the ProjectRegistrar address using the TSM public key
+    - URI pointing to the location to find claim data for the project
+9. TSMRegistrar calls ERSRegistry passing rootNode, nameHash, and ProjectRegistrar address to create subNode and set ProjectRegistrar as the owner
+10. TSMRegistrar calls project’s ProjectRegistrar and writes subNode to its rootNode state
+11. TSMRegistrar pushes ProjectRegistrar address into its projects array
+12. TSMRegistrar calls addProjectEnrollment on ChipRegistry passing in the 
+    - Registrar address
+    - TSMs public key used to sign certificates
+    - Signed registrar address using TSMs public key
+    - Merkle root for claiming chips (same root as in step 8d)
+    - Transfer policy for the chip to use
+    - URI pointing to the location to find claim data for the project
+13. ChipRegistry calls TSMRegistry checking that calling address is a TSMRegistrar
+14. ChipRegistry checks that signed address resolves to TSMs public key in order to validate they own the address (we will be checking to make sure that the certificates submitted during the claim process are signed by this address as well)
+15. Save merkle root to ChipRegistry in enrollment mapping under ProjectRegistrar address
+
 
