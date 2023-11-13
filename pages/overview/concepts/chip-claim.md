@@ -10,9 +10,11 @@ Practically, claiming a chip ties two pieces of information to the chip:
 Once claimed you can add additional services to be resolved by clients, these could be ticketing services or other experiences that you want to be able to resolve to when the chip is scanned.
 
 ## How to Claim a Chip
+![claim](../../../public/claim.png)
+
 All chip claims are processed by the `ProjectRegistrar` associated with the project the chip is enrolled in. `ProjectRegistrar`s are not created by the ERS system, instead they are created by the project owner and are responsible for managing the enrollment of chips into the project. This means that the data requirements may differ depending on the project, however each `ProjectRegistrar` is required to do two things:
-1. Call the `ERSRegistry` to create and ERS name for the chip being enrolled
-2. Call the `ChipRegistry` to enroll the chip in the system
+1. Call the `ERSRegistry` to create and ERS name for the chip being enrolled (Step 3)
+2. Call the `ChipRegistry` to enroll the chip in the system (Step 4)
 
 When calling the `ChipRegistry` the `ProjectRegistrar` must provide the following data:
 - `chipId` - the unique identifier for the chip
@@ -40,8 +42,39 @@ The `chipClaimData` struct is defined as follows:
 In order for the claim to go through the chip must:
 1. Not have been previously claimed by ANY project
 2. Have the correct `ERSRegistry` state set by the `ProjectRegistrar`
-3. Have valid Manufacturer and project inclusion proofs
+3. Have valid Manufacturer and project inclusion proofs (Step 9)
 4. Have valid certificates from the TSM
+
+Once the claim is validated the primaryService for the chip is set in the `ServicesRegistry` (Step 11). __See below for more granular step-by-step of the flow.__
 
 ## Example: Claiming a Chip
 For an example of claiming a chip see [Claiming A Chip](../../scripts/chip-claim.md) section in our scripts documentation.
+
+## Appendix: Technical Step-by-Step
+Step by step explanation of above image:
+
+1. End-user submits a message signed by the chip (ownershipProof) calling a `claim` function on the ProjectRegistrar (TSMs could have one registrar per project) submitting the following:
+    - `tsmIndex` - index of tsm merkle proof
+    - `enrollmentId`
+    - `primaryServiceId`
+    - `lockinPeriod`
+    - `tokenUri`
+    - TSM merkle proof
+    - `tsmCertificate`
+    - `custodyProof`
+    - `mIndex` - index of manufacturer merkle proof
+    - Manufacturer merkle proof
+2. Registrar validates and updates any of its own state that it wants to
+3. Registrar calls ERSRegistry setting subnode with chip as resolver and specifying owner
+4. Registrar calls a claim function on the ChipRegistry (now passing along the chipId)
+5. Check that chip hasn’t already been claimed
+6. ChipRegistry validates that the tsmCertificate was signed by the TSM
+7. ChipRegistry validates that the custodyProof was signed by the chip
+8. ChipRegistry validates chip exists in merkle tree by passing in index, chipId, enrollmentId, primaryServiceId, tokenUri, and lockinPeriod
+9. ChipRegistry calls ManufacturerRegistry with chipId, enrollmentId, and manufacturer merkle proof to make sure it's an enrolled chip
+10. If not an enrolled chip revert, else write chipId, primaryServiceId, enrollmentId, and owner address to state
+    - enrollmentId will be used to find chip-related specification`
+11. ChipRegistry calls ServiceRegistry to set primaryServiceId for the chip
+12. Mint PBT
+13. ChipRegistry sets all necessary state in ChipInfo
+
