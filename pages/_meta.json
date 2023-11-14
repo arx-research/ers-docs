@@ -1,20 +1,8 @@
 {
-  "index": {
-    "title": "Home",
-    "type": "page"
-  },
-  "overview": {
-    "title": "Overview",
-    "type": "page"
-  },
-  "scripts": {
-    "title": "Scripts",
-    "type": "page"
-  },
-  "solidity-api": {
-    "title": "Contracts",
-    "type": "page"
-  },
+  "index": "Home",
+  "overview": "Overview",
+  "scripts": "Scripts",
+  "solidity-api": "Contracts",
   "contact": {
     "title": "Contact ↗",
     "type": "page",
