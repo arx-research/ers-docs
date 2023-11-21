@@ -5,7 +5,7 @@ This article outlines the different actors / participants in the ERS system. The
 ## Manufacturers
 The party responsible for the manufacture of configured chips which are ultimately provided to the brands and creators who integrate them into physical goods. Manufacturer's enroll their chips in the protocol so that chip holders can track chip possession and ownership from the factory floor to the end consumer.
 
-## TSMs
+## Trusted Service Managers
 The brand, creator or integrator that enrolls or “mints” chips against the physical things they are embedded in or attached to. Large brands will typically bulk enroll large numbers of chips, while integrators may act on behalf of smaller brands as the TSM in order to save costs. A TSM is responsible for the scanning experience that a chip resolves to as well as a [primary experience](concepts/services.md) for the end user. The term TSM derives from cellular network operators that historically managed SIM card based applications.
 
 ## Chip Owners

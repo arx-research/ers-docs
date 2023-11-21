@@ -1,5 +1,5 @@
 # What Are TSMs?
-TSMs are modeled after Trusted Service Managers common to mobile networks. These actors take custody of chips from manufacturers and distribute manufacturer enrolled chips to end users or other projects that are building on top of the TSM's infrastructure.
+TSMs are modeled after Trusted Service Managers common to mobile networks. These actors take custody of chips from manufacturers and distribute enrolled chips to end users or other projects that are building on top of the TSM's infrastructure.
 
 ## How is a TSM added?
 TSMs can only be added by governance. In order to add a TSM the TSM must commit to a ers name they wish to use, creating a `[tsm].ers` name. This subdomain will be used to identify all projects launched under the TSM since all project ERS names will then have the format `[project].[tsm].ers`. Adding a TSM is a two-step process:

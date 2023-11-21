@@ -1,5 +1,5 @@
 # Who Are Manufacturers?
-Manufacturers are those that source chips from a factory that can be sold to brands and creators so that they can be embedded in products.
+Manufacturers create or source chips that they sell them to brands and creators so that they can be embedded in products.
 
 ## How is a Manufacturer added?
 Manufacturers are added via governance. Manufacturers are ultimately the bedrock of the system. Their are responsible for being able to ensure the security of their chips. As such it is important to ensure that only trusted manufacturers are added to the system.

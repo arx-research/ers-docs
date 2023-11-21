@@ -1,5 +1,5 @@
 # What is the ERS Registry?
-The ERS Registry is a modified fork of the ENS Registry used to track ERS names. ERS names provide a way to track the chain of custody of chips from manufacturer to TSM to Project to end-user, in this way the ERSRegistry contract acts as an easy way to validate the authenticity of items that contain embedded chips enrolled in the ERS system.
+The ERS Registry is a modified fork of the ENS Registry used to manage ERS names. ERS names provide a way to track the chain of custody of chips from manufacturer to TSM to Project to end-user, in this way the ERSRegistry contract acts as an easy way to validate the authenticity of items that contain embedded chips enrolled in the ERS system.
 
 Each name is associated with a `Record` that points towards an `owner` and `resolver` address. The `owner` address is the address that can add subdomains to a given name. In some instances the `owner` is also allowed to set a new `owner` of the `Record`. However, once set the `resolver` parameter of a `Record` cannot be updated, it is forever tied to the address / chip that was specified upon `Record` creation. We do this to make sure that the chain of custody of a chip cannot be altered after the fact (thus breaking authentication of chips).
 

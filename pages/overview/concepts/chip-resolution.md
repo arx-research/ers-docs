@@ -1,11 +1,11 @@
 # Understanding Chip Resolution
 
 ## Problem and Purpose
-A core feature of ERS is that all chips should be able to resolve to a service, whether IPFS based app or a standard web app. In order to reliably resolve we need to be able to:
+A core feature of ERS is that all chips resolve to a service through a special type of record called a `redirectUri`. This resolution can range from redirecting to a hosted web app to loading to a decentralized IPFS dapp. In order to reliably resolve we need to be able to:
 1. Verify the chip has been correctly enrolled in ERS
 2. Be able to return a service address for the chip
 
-Step 2 is relatively easy, since an service address is a small amount of data it can be stored on-chain and managed through our ServiceRegistry. Step 1 however presents some challenges due to the amount of data required to be able to prove a chip has been validly enrolled in ERS. In order to validate enrollment in ERS we must provide the following information:
+Step 2 is relatively easy, since an service address is a small amount of data it can be stored onchain and managed through our ServiceRegistry. Step 1 however presents some challenges due to the amount of data required to be able to prove a chip has been validly enrolled in ERS. In order to validate enrollment in ERS we must provide the following information:
 - Project Merkle leaf data
     - Merkle leaf index
     - chipId
@@ -22,10 +22,10 @@ Step 2 is relatively easy, since an service address is a small amount of data it
     - chipId
 - Manufacturer Merkle Proof
 
-Storing all this information on-chain would be prohibitively expensive so we need to store it somewhere off-chain and be able to trust that we're getting the correct data to verify the chip is correctly enrolled.
+Storing all this information onchain for large enrollments of chips that may or may not ultimately be claimed would be prohibitively expensive. We initially store the merkle proof and leaf data offchain until the point at which we verify and then write this data onchain -- say during a claim process.
 
-## Fetching Off-Chain Data
-In order to fetch off-chain data we use the [EIP-3668 standard](https://eips.ethereum.org/EIPS/eip-3668), also known as CCIP-read. For a more general explainer of CCIP-read we encourage you to read the standard, but here we'll provide the series of steps as tailored to the ERS protocol:
+## Fetching Offchain Data
+In order to fetch offchain data we use the [EIP-3668 standard](https://eips.ethereum.org/EIPS/eip-3668), also known as CCIP-read. For a more general explainer of CCIP-read we encourage you to read the standard, but here we'll provide the series of steps as tailored to the ERS protocol:
 1. User requests chip resolution via a EIP-3668 enabled client, by passing in `chipId`
 2. Client takes `chipId` and passes to `resolveChipId` on the `ChipRegistry`
 3. Assuming chip hasn't been claimed, the `OffChainLookup` error is thrown returning an array of gateways to check for validation data, params to call the gateway with, and a callback function on the smart contract
@@ -38,16 +38,16 @@ The above represents the general flow, the following sections will highlight wha
 
 ## Resolution States
 There are 4 main resolution states a chip can be in:
-1. Claimed
-2. Unclaimed - Enrolled in a Project 
-3. Unclaimed - Enrolled by a Manufacturer
-4. Unenrolled
+1. Unenrolled
+2. Unclaimed - Enrolled by a Manufacturer
+3. Unclaimed - Enrolled in a Project 
+4. Claimed
 
 ### Claimed
-When a chip has already been claimed resolution is easy and does not require the full CCIP-read flow. Instead, in Step 3 the client will return an array Service Records associated with the primary service set for the chip, instead of erroring out, thus not invoking the call to the gateway.
+When a chip has already been claimed, resolution is easy and does not require the full CCIP-read flow. In the case of a claimed chip, `resolveChipId` will return an array Service Records associated with the primary service set for the chip rather than of erroring out and invoking the call to the gateway.
 
 ### Unclaimed - Enrolled in a Project
-When a chip hasn't been claimed but has been enrolled in a project the full CCIP-read flow will play out behind the scenes. The gateway will return an array of potentially valid data blobs which are iterated over until a valid blob is found. From this we can get the intended initial primary service for the chip which we can use to return an array of Service Records to the client.
+When a chip hasn't been claimed but has been enrolled in a project, the full CCIP-read flow will play out behind the scenes. The gateway will return an array of potentially valid data blobs which are iterated over until a valid blob is found. From this we can get the intended initial primary service for the chip which we can use to return an array of Service Records to the client.
 
 ### Unclaimed - Enrolled by a Manufacturer
 When a chip hasn't been enrolled in a project it should still be enrolled by a manufacturer if it is a part of the system. In this case there will only be a valid data blob for the Manufacturer Merkle tree which allows us to validate it's enrollment in the system and thus the protocol returns the Manufacturer's bootloader app.
