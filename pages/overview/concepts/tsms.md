@@ -2,9 +2,21 @@
 TSMs are modeled after Trusted Service Managers common to mobile networks. These actors take custody of chips from manufacturers and distribute manufacturer enrolled chips to end users or other projects that are building on top of the TSM's infrastructure.
 
 ## How is a TSM added?
-TSMs can only be added by governance. In order to add a TSM the TSM must commit to a ers name they wish to use, creating a `[tsm].ers` name. This subdomain will be used to identify all projects launched under the TSM since all project ERS names will then have the format `[project].[tsm].ers`. Adding a TSM is a two-step process:
+TSMs can only be added by governance. In order to add a TSM the TSM must commit to a ers name they wish to use, creating a `[tsm].ers` name. This subdomain will be used to identify all projects launched under the TSM since all project ERS names will then have the format `[project].[tsm].ers`. 
+
+Adding a TSM is a two-step process:
 1. Once the TSM has selected their name it is passed in along with a `_tsmOwner` address to the `addAllowedTSM` function on the `TSMRegistry`
 2. After step 1 is completed the TSM calls `createNewTSMRegistrar` which deploys a new `TSMRegistrar` contract that is owned by the `_tsmOwner` address. This contract is used to manage the TSM's projects. When calling `createNewTSMRegistrar` the caller can select an implmentation of `TSMRegistrarFactory` they wish to use. Once deployed the implementation cannot be changed. `TSMRegistrarFactories` are permissioned implementations that can only be added by governance.
+
+### Real-World Example
+
+To better understand the concept of TSMs and their projects, let's consider a real-world example.
+
+Imagine a TSM called `CoolNFTShoes`. In the ERS system, they would have a name like `CoolNFTShoes.ers`.
+
+Now, let's say `CoolNFTShoes` launches their first project, a limited edition shoe called `AirForceTwos`. In the ERS system, this project would be identified as `AirForceTwos.CoolNFTShoes.ers`.
+
+So, in this example, `CoolNFTShoes.ers` is the TSM, and `AirForceTwos.CoolNFTShoes.ers` is a project launched by that TSM. This naming convention helps to clearly identify the TSM and the specific projects they launch.
 
 ## What can TSMs do?
 Once the TSM has their `TSMRegistrar` deployed they can begin adding projects. TSMs have two options for adding projects:
