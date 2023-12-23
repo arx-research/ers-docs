@@ -13,7 +13,7 @@ Once claimed you can add additional services to be resolved by clients, these co
 ![claim](../../../public/claim.png)
 
 All chip claims are processed by the `ProjectRegistrar` associated with the project the chip is enrolled in. `ProjectRegistrar`s are not created by the ERS system, instead they are created by the project owner and are responsible for managing the enrollment of chips into the project. This means that the data requirements may differ depending on the project, however each `ProjectRegistrar` is required to do two things:
-1. Call the `ERSRegistry` to create and ERS name for the chip being enrolled (Step 3)
+1. Call the `ERSRegistry` to create an ERS name for the chip being enrolled (Step 3)
 2. Call the `ChipRegistry` to enroll the chip in the system (Step 4)
 
 When calling the `ChipRegistry` the `ProjectRegistrar` must provide the following data:

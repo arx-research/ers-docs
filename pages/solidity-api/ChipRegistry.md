@@ -2,10 +2,11 @@
 
 ## ChipRegistry
 
+// Is it always Arx Protocol? is Arx Protocol the Manufacturer in this situation?
 Entrypoint for resolving chips added to Arx Protocol. TSMs can enroll new projects into this registry by specifying a
 ProjectRegistrar to manage chip claims. Chip claims are forwarded from ProjectRegistrars at which point a ERC-721
 compliant "token" of the chip is minted to the claimant and other metadata associated with the chip is set. Any project
-looking to integrate ERS chips should get resolution information about chips from this address. Because chips are
+looking to integrate ERS chips should get resolution information (TODO: any example of what resolution information might contain?) about chips from this address. Because chips are
 represented as tokens any physical chip transfers should also be completed on-chain in order to get full functionality
 for the chip.
 
@@ -158,7 +159,7 @@ this function the project must first sign a message of the _projectRegistrar add
 private key. This key MUST be the same key used to sign all the chip certificates for the project. This creates a link between
 chip certificates (which may be posted online) and the deployer of the registrar hence making sure that no malicious TSM is able
 to steal another TSM's chips for their own enrollment (unless the private key happens to be leaked). This function will
-revert if the project is already enrolled. See documentation for more instructions on how to create a project merkle root._
+revert if the project is already enrolled. See documentation(TODO which documentation exactly? todo add link here) for more instructions on how to create a project merkle root._
 
 #### Parameters
 
@@ -178,7 +179,7 @@ function updateProjectMerkleRoot(contract IProjectRegistrar _projectRegistrar, b
 ```
 
 _Update the merkle root of a project enrollment. This function is only callable by the project's public key. This function
-will revert if the project has already claimed a chip from this enrollment or the 7-day update time period has elapsed. New URI
+will revert if the project has already claimed a chip from this enrollment or the 7-day update time period (find link to this) has elapsed. New URI
 is required because IPFS records are immutable so changing the merkle root would require a new IPFS record._
 
 #### Parameters
@@ -277,7 +278,7 @@ function addGatewayURL(string _gatewayUrl) external
 ```
 
 ONLY OWNER: Add a new gateway URL to the array of gateway URLs. This array returns different URLs the client can call to
-get the data to resolve an unclaimed chip. The client can then use the data returned from the URL to call resolveUnclaimedChip.
+get the data to resolve an unclaimed chip (TODO: what happens when it is claimed? what happens to these gateway URLs?). The client can then use the data returned from the URL to call resolveUnclaimedChip.
 
 #### Parameters
 

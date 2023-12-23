@@ -82,7 +82,8 @@ constructor(contract IChipRegistry _chipRegistry, contract ITSMRegistrar _tsmReg
 function addProject(address _projectManager, string _projectClaimDataUri, bytes32 _nameHash, bytes32 _merkleRoot, address _projectPublicKey, address _provingChip, struct IChipRegistry.TSMMerkleInfo _tsmMerkleInfo, struct IChipRegistry.ManufacturerValidation _manufacturerValidation, bytes _chipOwnershipProof, bytes _projectOwnershipProof) public
 ```
 
-Adds a new TSM's project to the ERS system by deploying the ProjectRegistrar contract via CREATE2 and
+// The TSM doesn't have to be new right?
+Adds a TSM's new project to the ERS system by deploying the ProjectRegistrar contract via [CREATE2](https://docs.openzeppelin.com/cli/2.8/deploying-with-create2) and
 registering it to the TSM Registrar. We use CREATE2 because we need the projectManager to provide proof of
 ownership by signing a hash of the projectRegistrar address with the projectPublicKey. This is not possible
 unless we know the address ahead of time, hence we use CREATE2 which allows us to know the address.
@@ -107,7 +108,8 @@ unless we know the address ahead of time, hence we use CREATE2 which allows us t
 ```solidity
 function setTransferPolicy(contract ITransferPolicy _transferPolicy) external
 ```
-
+//TODO: also, in the architecture diagram, which one is ArxProjectEnrollmentManager?
+// TODO: i thought transfer policy was set by the current item owner?
 Sets the transfer policy for all projects deployed by this contract
 
 #### Parameters
@@ -151,7 +153,7 @@ _Returns true if passed address is not the zero address_
 function _validateOwnershipAndTreeInclusion(address _provingChip, bytes _chipOwnershipProof, bytes32 _merkleRoot, struct IChipRegistry.TSMMerkleInfo _tsmMerkleInfo, struct IChipRegistry.ManufacturerValidation _manufacturerValidation) internal view
 ```
 
-_Validates that the chip used as proof of ownership is in possesion of the msg.sender, is included in the project merkle root, AND
+_Validates that the chip used as proof of ownership is in possession of the msg.sender, is included in the project merkle root, AND
 is a chip that's been enrolled in the ManufacturerRegistry._
 
 #### Parameters
