@@ -1,3 +1,9 @@
+# Ethereum Reality Service (ERS) Documentation
+
+This is the documentation for the Ethereum Reality Service (ERS) project; [https://docs.ers.to/](https://docs.ers.to/)
+
+
+---
 # Nextra Docs Template 
 
 This is a template for creating documentation with [Nextra](https://nextra.site).

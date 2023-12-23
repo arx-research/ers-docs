@@ -2,7 +2,7 @@
 Manufacturers are those that source chips from a factory that can be sold to brands and creators so that they can be embedded in products.
 
 ## How is a Manufacturer added?
-Manufacturers are added via governance. Manufacturers are ultimately the bedrock of the system. Their are responsible for being able to ensure the security of their chips. As such it is important to ensure that only trusted manufacturers are added to the system.
+Manufacturers are added via governance. Manufacturers are ultimately the bedrock of the system. They are responsible for being able to ensure the security of their chips. As such it is important to ensure that only trusted manufacturers are added to the system.
 
 ## What can Manufacturers do?
 The vision is for all embedded chips to use ERS so that there is a one-stop location for resolving chips. In order for ERS to be able to prove the full provenance of a chip manufacturer's must enroll their chips in the system by calling `addChipEnrollment` on the `ManufacturerRegistry`. When enrolling chips, manufacturers are required to specify a few identifying parameters:
