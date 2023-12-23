@@ -1,7 +1,6 @@
 # Solidity API
 
 ## ERSRegistry
-// TODO: big paragraph was hard to see key words/structures
 Fork of `ENSRegistry` with adapted data structures and accessibility logic in order to conform to needs of ERS. Node
 owners can create any subnode. A node tracks the owner of the node and the address the node resolves to. Within the
 context of ERS a resolver represents either a smart contract OR a chip. The owner has the ability to create any subnodes

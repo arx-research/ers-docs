@@ -82,7 +82,6 @@ constructor(contract IChipRegistry _chipRegistry, contract ITSMRegistrar _tsmReg
 function addProject(address _projectManager, string _projectClaimDataUri, bytes32 _nameHash, bytes32 _merkleRoot, address _projectPublicKey, address _provingChip, struct IChipRegistry.TSMMerkleInfo _tsmMerkleInfo, struct IChipRegistry.ManufacturerValidation _manufacturerValidation, bytes _chipOwnershipProof, bytes _projectOwnershipProof) public
 ```
 
-// TODO: what is CREATE2 exactly? I'm still unclear on this, can we add a link to their documentation? edit: did I get the link right?
 // The TSM doesn't have to be new right?
 Adds a TSM's new project to the ERS system by deploying the ProjectRegistrar contract via [CREATE2](https://docs.openzeppelin.com/cli/2.8/deploying-with-create2) and
 registering it to the TSM Registrar. We use CREATE2 because we need the projectManager to provide proof of
