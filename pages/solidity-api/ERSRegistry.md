@@ -1,15 +1,15 @@
 # Solidity API
 
 ## ERSRegistry
-
-Fork of ENSRegistry with adapted data structures and accessiblity logic in order to conform to needs of ERS. Node
+// TODO: big paragraph was hard to see key words/structures
+Fork of `ENSRegistry` with adapted data structures and accessibility logic in order to conform to needs of ERS. Node
 owners can create any subnode. A node tracks the owner of the node and the address the node resolves to. Within the
 context of ERS a resolver represents either a smart contract OR a chip. The owner has the ability to create any subnodes
-of its choosing, however only the TSMRegistry is able to change both the owner and the resolver for a given node once
+of its choosing, however only the `TSMRegistry` is able to change both the owner and the resolver for a given node once
 created. The ChipRegistry is able to change the owner of a node (signifying a transfer of a chip) but is not able to 
 change the resolver. These permissions are put in place in order to maintain a track record of authenticity for chips
-while allowing the TSMRegistry to re-assign sub-domains to new TSMRegistrars. Note that if a TSMRegistry's subnode is
-reassigned to a new TSMRegistrar the new TSMRegistrar CANNOT overwrite the nodes created by the previous node owner.
+while allowing the `TSMRegistry` to re-assign sub-domains to new `TSMRegistrars`. Note that if a `TSMRegistry`'s subnode is
+reassigned to a new `TSMRegistrar` the new `TSMRegistrar` CANNOT overwrite the nodes created by the previous node owner.
 
 ### NewOwner
 

@@ -2,7 +2,7 @@
 
 ## ProjectRegistrar
 
-Entry point for users claiming chips. Responsible for setting the ers name for each chip in its enrollment as [chip].project.tsm.ers.
+Entry point for users claiming chips. Responsible for setting the ERS name for each chip in its enrollment as [chip].project.tsm.ers.
 The TSM Registrar sets the root node of the ProjectRegistrar when addProject is called on the TSMRegistrar
 The owner of the contract can set the claim app URL
 
