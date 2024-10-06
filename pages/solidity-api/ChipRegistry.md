@@ -2,18 +2,12 @@
 
 ## ChipRegistry
 
-Entrypoint for resolving chips added to Arx Protocol. TSMs can enroll new projects into this registry by specifying a
-ProjectRegistrar to manage chip claims. Chip claims are forwarded from ProjectRegistrars at which point a ERC-721
-compliant "token" of the chip is minted to the claimant and other metadata associated with the chip is set. Any project
-looking to integrate ERS chips should get resolution information about chips from this address. Because chips are
-represented as tokens any physical chip transfers should also be completed on-chain in order to get full functionality
+Entrypoint for resolving chips added to ERS. Developers can enroll new projects into this registry by specifying a
+ProjectRegistrar to manage chips. Chips are added through ProjectRegistrars at which point a ERC-5791
+compliant "token" of the chip is minted. Any project
+integrating ERS chips should retrieve resolution information about chips from this address. Because chips are
+represented as tokens, any physical chip transfers should also be completed o-chain in order to get full functionality
 for the chip.
-
-### OffchainLookup
-
-```solidity
-error OffchainLookup(address sender, string[] urls, bytes callData, bytes4 callbackFunction, bytes extraData)
-```
 
 ### ProjectEnrollmentAdded
 
@@ -21,28 +15,10 @@ error OffchainLookup(address sender, string[] urls, bytes callData, bytes4 callb
 event ProjectEnrollmentAdded(address tsmRegistrar, address projectRegistrar, address transferPolicy, address projectPublicKey, bytes32 merkleRoot, string projectClaimDataUri)
 ```
 
-### ProjectMerkleRootUpdated
-
-```solidity
-event ProjectMerkleRootUpdated(address projectRegistrar, bytes32 merkleRoot, string projectClaimDataUri)
-```
-
 ### ChipClaimed
 
 ```solidity
 event ChipClaimed(address chipId, uint256 tokenId, address owner, bytes32 serviceId, bytes32 ersNode, bytes32 enrollmentId, string tokenUri)
-```
-
-### GatewayURLAdded
-
-```solidity
-event GatewayURLAdded(string gatewayUrl)
-```
-
-### GatewayURLRemoved
-
-```solidity
-event GatewayURLRemoved(string gatewayUrl)
 ```
 
 ### MaxLockinPeriodUpdated

@@ -1,7 +1,7 @@
 # Understanding Services
 
 ## What are Services?
-Services bind any record type -- for instance metadata or a redirect destination -- to chips. Similar to records in ENS or DNS, services are an open ended key value store. Unlike ENS and DNS, however, Services are typically associated on a bulk basis and they are controlled by default by service creators who can modify them behalf of chip holders. A simple example of this is a brand that hosts an initial app at `brand.com/app` and who subsequently upgrades the service to a new experience at `app.brand.com`.
+Services bind any record type -- for instance metadata or a redirect destination -- to chips. Similar to records in ENS or DNS, services are an open ended key value store. Unlike ENS and DNS, however, Services are typically associated on a bulk basis and they are controlled by default by service creators who can modify them behalf of chip holders. A simple example of this is a brand that redirects chips to an initial app at `brand.com/app`, and who subsequently upgrades the service to a new experience at `app.brand.com`.
 
 Services are identified by their unique `serviceId` that is granted upon creation. Service IDs are just a hash of the service's name, given out on a first come first serve basis. Services contain a list of records that offer different experiences or ways to resolve the service. A `ServiceRecord` is structured as such:
 ```

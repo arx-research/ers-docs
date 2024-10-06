@@ -5,9 +5,9 @@
     "ERSRegistry": "ERSRegistry",
     "ManufacturerRegistry": "ManufacturerRegistry",
     "ServicesRegistry": "ServicesRegistry",
-    "TSMRegistrar": "TSMRegistrar",
-    "TSMRegistry": "TSMRegistry",
-    "TSMRegistrarFactory": "TSMRegistrarFactory",
+    "DeveloperRegistrar": "DeveloperRegistrar",
+    "DeveloperRegistry": "DeveloperRegistry",
+    "DeveloperRegistrarFactory": "DeveloperRegistrarFactory",
     "project-registrars": " Project Registrars",
     "token": "PBT"
 }

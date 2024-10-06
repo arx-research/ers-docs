@@ -1,0 +1,27 @@
+# Transferring A Chip
+This section details how to transfer a chip using the `ers-scripts` repo.
+
+## Set Up
+_If you are trying to execute a transaction it is assumed that you have also read the [Set Up](setup.md) section. If you are just looking for an example read on_
+
+To be able to claim a chip you first need to specify the Ethereum account you want to call `transferToken`, note that this address will be set as the "owner" of the chip. To do this, you must input the private key of the account you wish to use into the `.env` file. The `.env` file should look something like this:
+
+```
+...
+TESTNET_CHIP_OWNER_PRIVATE_KEY=ac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
+...
+BASE_CHIP_OWNER_PRIVATE_KEY=ac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
+```
+Replace the stand-in private keys (pulled from Hardhat) with the private key you wish to use. Make sure that you are using the correct private key for the __network__ you are deploying to.
+
+## Usage
+Arguments:
+`network`: The network you want to interact with (defaults to `hardhat`)
+
+```bash
+yarn transferToken --network [network]
+```
+
+You will be prompted by a QR code scanner to scan the chip to first get the `chipId` and subsequently again to create a `transferToken` signature. The signature will contain the address assocaited with the owner key specified in the Setup section above. Scan the QR code on your smartphone and follow the prompts to capture chip data. You can scan your chip by tapping it to the NFC reader on the back of your smartphone.
+
+Upon successful submission of the chip signature to the `transferToken`, the new owner of the chip should be reflected through ERS.

@@ -1,9 +1,9 @@
 {
     "manufacturer": "Who are Manufacturers?",
-    "tsms": "What are TSMs?",
+    "developers": "What are Developers?",
     "ers-registry": "ERS Registry",
     "chip-resolution": "Resolving Chips",
-    "chip-claim": "Claiming Chips",
+    "chip-transfer": "Transferring Chips",
     "services": "Understanding Services",
     "pbt": "What is a PBT?"
 }

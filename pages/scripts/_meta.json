@@ -1,7 +1,8 @@
 {
     "intro": "Introduction",
     "setup": "Set-Up",
+    "claim-name": "Claim A Developer Name",
     "create-service": "Create a Service",
     "create-project": "Create a Project",
-    "chip-claim": "Claim a Chip"
+    "chip-transfer": "Transfer a Chip"
 }

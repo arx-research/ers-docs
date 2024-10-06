@@ -9,4 +9,6 @@ Practically, this means that
 3. Creators can immutably link physical art without centralized dependencies.
 4. End users are able to track and verify the custody history of their product.
 
-ERS leverages a combination of attestations, a namespace and binding enrollments to achieve these properties for users. In order to optimize deployment costs for manufacturers and developers, ERS uses EIP3668 and merkle trees in order to bundle together large numbers of chip certificates offchain. This data can be written onchain when desired, for instance by an end user who wishes to reflect ownership of an item onchain.
+ERS leverages a combination of attestations, a namespace and binding enrollments to achieve these properties for users. ERS is comprised of `Manufacturers` who enroll chips and `Developers` who create `Projects`.
+
+ERS is deployed on the Sepolia testnet and Base layer 2.
