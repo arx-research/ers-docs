@@ -4,6 +4,7 @@ The ERS Registry is a modified fork of the ENS Registry used to manage ERS names
 Each name is associated with a `Record` that points towards an `owner` and `resolver` address. The `owner` address is the address that can add subdomains to a given name. In some instances the `owner` is also allowed to set a new `owner` of the `Record`. However, once set the `resolver` parameter of a `Record` cannot be updated, it is forever tied to the address / chip that was specified upon `Record` creation. We do this to make sure that the chain of custody of a chip cannot be altered after the fact (thus breaking authentication of chips).
 
 # How is the ERS Registry updated?
+![ers-registry](../../../public/ers.png)
 As mentioned above the ERS Registry can only be updated by the `owner` of a given `Record`. The most common update will be adding subnodes for a given name. Subnodes can be added in the following ways...
 
 ## Creating Developer Subnodes
