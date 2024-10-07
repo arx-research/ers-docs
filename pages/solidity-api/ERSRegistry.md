@@ -2,14 +2,14 @@
 
 ## ERSRegistry
 
-Fork of ENSRegistry with adapted data structures and accessiblity logic in order to conform to needs of ERS. Node
+Fork of ENSRegistry with adapted data structures and accessibility logic in order to conform to the needs of ERS. Node
 owners can create any subnode. A node tracks the owner of the node and the address the node resolves to. Within the
-context of ERS a resolver represents either a smart contract OR a chip. The owner has the ability to create any subnodes
-of its choosing, however only the TSMRegistry is able to change both the owner and the resolver for a given node once
+context of ERS, a resolver represents either a smart contract OR a chip. The owner has the ability to create any subnodes
+of its choosing; however, only the DeveloperRegistry is able to change both the owner and the resolver for a given node once
 created. The ChipRegistry is able to change the owner of a node (signifying a transfer of a chip) but is not able to 
-change the resolver. These permissions are put in place in order to maintain a track record of authenticity for chips
-while allowing the TSMRegistry to re-assign sub-domains to new TSMRegistrars. Note that if a TSMRegistry's subnode is
-reassigned to a new TSMRegistrar the new TSMRegistrar CANNOT overwrite the nodes created by the previous node owner.
+change the resolver. These permissions are put in place to maintain a track record of authenticity for chips while allowing
+the DeveloperRegistry to re-assign sub-domains to new DeveloperRegistrars. Note that if a DeveloperRegistry's subnode is
+reassigned to a new DeveloperRegistrar, the new DeveloperRegistrar CANNOT overwrite the nodes created by the previous node owner.
 
 ### NewOwner
 
@@ -50,10 +50,10 @@ modifier authorised(bytes32 _node)
 contract IChipRegistry chipRegistry
 ```
 
-### tsmRegistry
+### developerRegistry
 
 ```solidity
-contract ITSMRegistry tsmRegistry
+contract IDeveloperRegistry developerRegistry
 ```
 
 ### records
@@ -65,10 +65,17 @@ mapping(bytes32 => struct ERSRegistry.Record) records
 ### constructor
 
 ```solidity
-constructor(contract IChipRegistry _chipRegistry, contract ITSMRegistry _tsmRegistry) public
+constructor(contract IChipRegistry _chipRegistry, contract IDeveloperRegistry _developerRegistry) public
 ```
 
-_Constructs a new ERS registry._
+Constructs a new ERS registry.
+
+#### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _chipRegistry | contract IChipRegistry | Address of the ChipRegistry contract |
+| _developerRegistry | contract IDeveloperRegistry | Address of the DeveloperRegistry contract |
 
 ### createSubnodeRecord
 
@@ -76,7 +83,7 @@ _Constructs a new ERS registry._
 function createSubnodeRecord(bytes32 _node, bytes32 _nameHash, address _owner, address _resolver) external virtual returns (bytes32)
 ```
 
-_Sets the record for a new subnode. May only be called by owner of node (checked in _setSubnodeOwner)._
+Sets the record for a new subnode. May only be called by the owner of the node (checked in _setSubnodeOwner).
 
 #### Parameters
 
@@ -99,8 +106,7 @@ _Sets the record for a new subnode. May only be called by owner of node (checked
 function deleteSubnodeRecord(bytes32 _node, bytes32 _nameHash) external virtual
 ```
 
-_ONLY TSM REGISTRY: Deletes the record for an already created subnode. TSM Registry must be the owner of the node so as to not
-accidentally delete a non TSMRegistrar subnode._
+ONLY Developer REGISTRY: Deletes the record for an already created subnode.
 
 #### Parameters
 
@@ -115,8 +121,7 @@ accidentally delete a non TSMRegistrar subnode._
 function setNodeOwner(bytes32 _node, address _newOwner) external virtual
 ```
 
-_ONLY CHIP REGISTRY: Transfers ownership of a node to a new address. Owner cannot directly call (unless root node),
-ChipRegistry must manage ownership changes for chips in order to keep state consistent between ChipRegistry and ERS._
+ONLY CHIP REGISTRY: Transfers ownership of a node to a new address.
 
 #### Parameters
 
@@ -131,8 +136,8 @@ ChipRegistry must manage ownership changes for chips in order to keep state cons
 function isValidChipState(bytes32 _node, address _chipId, address _owner) external view virtual returns (bool)
 ```
 
-_Validate that state has been correctly set for a chip. Used by ChipRegistry to validate that a ProjectRegistrar has
-set the correct state for a chip._
+Validate that state has been correctly set for a chip. Used by ChipRegistry to validate that a ProjectRegistrar has
+set the correct state for a chip.
 
 #### Parameters
 
@@ -146,7 +151,7 @@ set the correct state for a chip._
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| [0] | bool | bool indicating whether state is valid |
+| [0] | bool | bool indicating whether the state is valid |
 
 ### getOwner
 
@@ -154,7 +159,7 @@ set the correct state for a chip._
 function getOwner(bytes32 _node) public view virtual returns (address)
 ```
 
-_Returns the address that owns the specified node._
+Returns the address that owns the specified node.
 
 #### Parameters
 
@@ -166,7 +171,7 @@ _Returns the address that owns the specified node._
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| [0] | address | address of the owner. |
+| [0] | address | Address of the owner. |
 
 ### getSubnodeOwner
 
@@ -174,7 +179,7 @@ _Returns the address that owns the specified node._
 function getSubnodeOwner(bytes32 _node, bytes32 _nameHash) external view virtual returns (address)
 ```
 
-_Returns the address that owns the specified subnode._
+Returns the address that owns the specified subnode.
 
 #### Parameters
 
@@ -187,7 +192,7 @@ _Returns the address that owns the specified subnode._
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| [0] | address | address of the owner. |
+| [0] | address | Address of the owner. |
 
 ### getResolver
 
@@ -195,7 +200,7 @@ _Returns the address that owns the specified subnode._
 function getResolver(bytes32 _node) external view virtual returns (address)
 ```
 
-_Returns the address of the resolver for the specified node._
+Returns the address of the resolver for the specified node.
 
 #### Parameters
 
@@ -207,7 +212,7 @@ _Returns the address of the resolver for the specified node._
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| [0] | address | address of the resolver. |
+| [0] | address | Address of the resolver. |
 
 ### recordExists
 
@@ -215,7 +220,7 @@ _Returns the address of the resolver for the specified node._
 function recordExists(bytes32 _node) public view virtual returns (bool)
 ```
 
-_Returns whether a record has been written to the registry for that node._
+Returns whether a record has been written to the registry for that node.
 
 #### Parameters
 
@@ -227,7 +232,7 @@ _Returns whether a record has been written to the registry for that node._
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| [0] | bool | Bool if record exists |
+| [0] | bool | Bool indicating if a record exists |
 
 ### getSubnodeHash
 
@@ -235,7 +240,7 @@ _Returns whether a record has been written to the registry for that node._
 function getSubnodeHash(bytes32 _node, bytes32 _nameHash) external pure returns (bytes32)
 ```
 
-_Returns the subnode hash of node + nameHash. This is the keccak256 hash of `node` + `nameHash`._
+Returns the subnode hash of node + nameHash.
 
 #### Parameters
 
@@ -243,6 +248,12 @@ _Returns the subnode hash of node + nameHash. This is the keccak256 hash of `nod
 | ---- | ---- | ----------- |
 | _node | bytes32 | The specified node. |
 | _nameHash | bytes32 | The specified nameHash. |
+
+#### Return Values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | bytes32 | The subnode hash |
 
 ### _calculateSubnode
 
@@ -261,4 +272,3 @@ function _setOwner(bytes32 node, address owner) internal virtual
 ```solidity
 function _setResolver(bytes32 _node, address _resolver) internal virtual
 ```
-

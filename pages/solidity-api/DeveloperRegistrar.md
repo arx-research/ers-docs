@@ -1,15 +1,21 @@
 # Solidity API
 
-## TSMRegistrar
+## DeveloperRegistrar
 
-Contract that coordinates adding a new project for a TSM. Each TSM has their own TSMRegistrar which is associated
-with a .ers subnode in the ERS registry ([tsm].ers). When adding a new project a subnode under the tsm.ers sub-
-domain is added ([projectName].tsm.ers) and the project is enrolled in the ChipRegistry.
+Contract that coordinates adding a new project for a Developer. Each Developer has their own DeveloperRegistrar which is associated
+with a .ers subnode in the ERS registry ([developer].ers). When adding a new project, a subnode under the developer.ers sub-
+domain is added ([projectName].developer.ers) and the project is enrolled in the ChipRegistry.
 
 ### ProjectAdded
 
 ```solidity
-event ProjectAdded(address projectRegistrar, bytes32 projectRootNode, bytes32 merkleRoot, address projectPublicKey, address transferPolicy, string projectClaimDataUri)
+event ProjectAdded(address indexed projectRegistrar, bytes32 projectRootNode)
+```
+
+### ProjectRemoved
+
+```solidity
+event ProjectRemoved(address indexed projectRegistrar)
 ```
 
 ### RegistrarInitialized
@@ -21,96 +27,118 @@ event RegistrarInitialized(bytes32 rootNode)
 ### chipRegistry
 
 ```solidity
-contract IChipRegistry chipRegistry
+IChipRegistry public immutable chipRegistry
 ```
 
 ### ers
 
 ```solidity
-contract IERS ers
+IERS public immutable ers
 ```
 
-### tsmRegistry
+### developerRegistry
 
 ```solidity
-contract ITSMRegistry tsmRegistry
+IDeveloperRegistry public immutable developerRegistry
+```
+
+### servicesRegistry
+
+```solidity
+IServicesRegistry public immutable servicesRegistry
 ```
 
 ### initialized
 
 ```solidity
-bool initialized
+bool public initialized
 ```
 
 ### rootNode
 
 ```solidity
-bytes32 rootNode
+bytes32 public rootNode
 ```
 
 ### projects
 
 ```solidity
-address[] projects
+address[] public projects
+```
+
+### projectIndex
+
+```solidity
+mapping(address => uint256) internal projectIndex
 ```
 
 ### constructor
 
 ```solidity
-constructor(address _owner, contract IChipRegistry _chipRegistry, contract IERS _ers, contract ITSMRegistry _tsmRegistry) public
+constructor(IChipRegistry _chipRegistry, IERS _ers, IDeveloperRegistry _developerRegistry, IServicesRegistry _servicesRegistry) public
 ```
 
-Constructor for TSMRegistrar. Sets the owner and ChipRegistry.
+Constructor for DeveloperRegistrar. Sets the owner and ChipRegistry.
 
 #### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _owner | address | Owner of the TSMRegistrar. This address is responsible for adding new projects |
 | _chipRegistry | contract IChipRegistry | ChipRegistry contract |
 | _ers | contract IERS | ERS registry |
-| _tsmRegistry | contract ITSMRegistry | TSMRegistry contract |
+| _developerRegistry | contract IDeveloperRegistry | DeveloperRegistry contract |
+| _servicesRegistry | contract IServicesRegistry | ServicesRegistry contract |
 
 ### initialize
 
 ```solidity
-function initialize(bytes32 _rootNode) external
+function initialize(address _owner, bytes32 _rootNode) external
 ```
 
-ONLY TSM REGISTRY: Initialize TSMRegistrar contract with root node. Required due to order of operations
+ONLY Developer REGISTRY: Initialize DeveloperRegistrar contract with root node. Required due to order of operations
 during deploy.
 
 #### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _rootNode | bytes32 | Root node of the TSM |
+| _owner | address | Owner of the DeveloperRegistrar |
+| _rootNode | bytes32 | Root node of the Developer |
 
 ### addProject
 
 ```solidity
-function addProject(bytes32 _nameHash, contract IProjectRegistrar _projectRegistrar, bytes32 _merkleRoot, address _projectPublicKey, contract ITransferPolicy _transferPolicy, bytes _ownershipProof, string _projectClaimDataUri) external
+function addProject(IProjectRegistrar _projectRegistrar, bytes32 _nameHash, bytes32 _serviceId, uint256 _lockinPeriod) external
 ```
 
-ONLY OWNER: Add a new project to the TSM. Creates a new subnode in the ENS registry and adds the project
-to the ChipRegistry. TSMRegistrar's DO NOT have the ability to overwrite their subnodes in ERS, hence if a _nameHash
-is already taken, this function will revert. Ownership proof is checked in the ChipRegistry.
+ONLY OWNER: Add a new project to the Developer. Creates a new subnode in the ENS registry and adds the project
+to the ChipRegistry.
 
 #### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _nameHash | bytes32 | Namehash of the project |
 | _projectRegistrar | contract IProjectRegistrar | ProjectRegistrar contract |
-| _merkleRoot | bytes32 | Merkle root of the project's chip ownership |
-| _projectPublicKey | address | Public key of the project |
-| _transferPolicy | contract ITransferPolicy | Transfer policy of the project |
-| _ownershipProof | bytes | Signed hash of the _projectRegistrar address by the _projectPublicKey |
-| _projectClaimDataUri | string | URI pointing to location of off-chain data required to claim chips |
+| _nameHash | bytes32 | Namehash of the project |
+| _serviceId | bytes32 | Service ID of the project |
+| _lockinPeriod | uint256 | Lockin period of the project |
+
+### removeProject
+
+```solidity
+function removeProject(IProjectRegistrar _projectRegistrar) external
+```
+
+ONLY OWNER: Remove a project from the Developer. Removes the project from the ChipRegistry.
+
+#### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _projectRegistrar | contract IProjectRegistrar | ProjectRegistrar contract |
 
 ### getProjects
 
 ```solidity
-function getProjects() external view returns (address[])
+function getProjects() external view returns(address[] memory)
 ```
-

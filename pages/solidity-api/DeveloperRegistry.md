@@ -1,45 +1,45 @@
 # Solidity API
 
-## TSMRegistry
+## DeveloperRegistry
 
-Contract responsible for tracking and permissioning TSMs. TSMs are given the ability to create a new TSMRegistrar by governance.
-When creating a new Registrar the TSM is given a new [x].ers name. Governance has the ability to revoke TSM permissions and re-
-assign the ERS name to a new TSM.
+Contract responsible for tracking and permissioning Developers. Developers are given the ability to create a new DeveloperRegistrar by
+governance. When creating a new Registrar, the Developer is given a new [x].ers name. Governance has the ability to revoke Developer permissions
+and reassign the ERS name to a new Developer.
 
-### TSMRegistrarAdded
+### DeveloperRegistrarAdded
 
 ```solidity
-event TSMRegistrarAdded(address tsmRegistrar, address owner, bytes32 rootNode)
+event DeveloperRegistrarAdded(address indexed developerRegistrar, address indexed owner, bytes32 rootNode)
 ```
 
-### TSMRegistrarRevoked
+### DeveloperRegistrarRevoked
 
 ```solidity
-event TSMRegistrarRevoked(address tsmRegistrar, bytes32 subnode, bytes32 _nameHash)
+event DeveloperRegistrarRevoked(address indexed developerRegistrar, bytes32 subnode, bytes32 _nameHash)
 ```
 
-### TSMAllowed
+### DeveloperAllowed
 
 ```solidity
-event TSMAllowed(address tsmOwner, bytes32 nameHash)
+event DeveloperAllowed(address indexed developerOwner, bytes32 nameHash)
 ```
 
-### TSMDisallowed
+### DeveloperDisallowed
 
 ```solidity
-event TSMDisallowed(address tsmOwner)
+event DeveloperDisallowed(address indexed developerOwner)
 ```
 
 ### RegistrarFactoryAdded
 
 ```solidity
-event RegistrarFactoryAdded(address factory)
+event RegistrarFactoryAdded(address indexed factory)
 ```
 
 ### RegistrarFactoryRemoved
 
 ```solidity
-event RegistrarFactoryRemoved(address factory)
+event RegistrarFactoryRemoved(address indexed factory)
 ```
 
 ### RegistryInitialized
@@ -51,43 +51,49 @@ event RegistryInitialized(address ers)
 ### ROOT_NODE
 
 ```solidity
-bytes32 ROOT_NODE
+bytes32 public constant ROOT_NODE
 ```
 
 ### ersRegistry
 
 ```solidity
-contract IERS ersRegistry
+IERS public ersRegistry
 ```
 
 ### initialized
 
 ```solidity
-bool initialized
+bool public initialized
+```
+
+### nameGovernor
+
+```solidity
+address public nameGovernor
 ```
 
 ### registrarFactories
 
 ```solidity
-mapping(contract ITSMRegistrarFactory => bool) registrarFactories
+mapping(IDeveloperRegistrarFactory => bool) public registrarFactories
 ```
 
-### pendingTSMs
+### pendingDevelopers
 
 ```solidity
-mapping(address => bytes32) pendingTSMs
+mapping(address => bytes32) public pendingDevelopers
 ```
 
-### isTSMRegistrar
+### isDeveloperRegistrar
 
 ```solidity
-mapping(address => bool) isTSMRegistrar
+mapping(address => bool) public isDeveloperRegistrar
 ```
 
-### tsmRegistrars
+### developerRegistrars
 
 ```solidity
-address[] tsmRegistrars
+address[] internal developerRegistrars
 ```
 
 ### constructor
@@ -99,118 +105,113 @@ constructor(address _governance) public
 ### initialize
 
 ```solidity
-function initialize(contract IERS _ers, contract ITSMRegistrarFactory[] _factories) external
+function initialize(IERS _ers, IDeveloperRegistrarFactory[] calldata _factories, address _nameGovernor) external
 ```
 
-ONLY OWNER: Initialize ChipRegistry contract with ERS and Services Registry addresses. Required due to order of operations
-during deploy.
+ONLY OWNER: Initialize DeveloperRegistry contract with ERS and Services Registry addresses. Required due to order of operations during deploy.
 
 #### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _ers | contract IERS | Address of the ERS contract |
-| _factories | contract ITSMRegistrarFactory[] | Array of TSMRegistrarFactory contracts |
+| _factories | contract IDeveloperRegistrarFactory[] | Array of DeveloperRegistrarFactory contracts |
+| _nameGovernor | address | Address of the Name Governor which can assign names to Developers |
 
-### createNewTSMRegistrar
+### createNewDeveloperRegistrar
 
 ```solidity
-function createNewTSMRegistrar(contract ITSMRegistrarFactory _factory) external returns (address)
+function createNewDeveloperRegistrar(IDeveloperRegistrarFactory _factory) external returns(address)
 ```
 
-Create a new TSMRegistrar for a TSM. In order to call, the calling address must be approved by governance. Once called the TSM
-must be added again if they want to launch a new TSMRegistrar. This function assigns the TSMRegistrar it's own .ers name. The passed
-nameHash must be different than any other TSMRegistrar's nameHash.
+Create a new DeveloperRegistrar for a Developer. In order to call, the calling address must be approved by governance.
 
 #### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _factory | contract ITSMRegistrarFactory | Address of the TSMRegistrarFactory to use for deploying the TSMRegistrar |
+| _factory | contract IDeveloperRegistrarFactory | Address of the DeveloperRegistrarFactory to use for deploying the DeveloperRegistrar |
 
-### revokeTSMRegistrar
+### revokeDeveloperRegistrar
 
 ```solidity
-function revokeTSMRegistrar(address _tsmRegistrar, bytes32 _nameHash) external
+function revokeDeveloperRegistrar(address _developerRegistrar, bytes32 _nameHash) external
 ```
 
-ONLY OWNER: Revoke permissions from a TSMRegistrar. This resets the owner and resolver to the zero address in the ERSRegistry
-and removes tracking of the TSMRegistrar within the TSMRegistry (delete from tsmRegistrars array and isTSMRegistrar mapping).
+ONLY OWNER: Revoke permissions from a DeveloperRegistrar.
 
 #### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _tsmRegistrar | address | Address of the TSMRegistrar that is being revoked |
-| _nameHash | bytes32 | Bytes32 hash of the ERS name the TSM wants for their Registrar |
+| _developerRegistrar | address | Address of the DeveloperRegistrar that is being revoked |
+| _nameHash | bytes32 | Bytes32 hash of the ERS name the Developer wants for their Registrar |
 
-### addAllowedTSM
+### addAllowedDeveloper
 
 ```solidity
-function addAllowedTSM(address _tsmOwner, bytes32 _nameHash) external
+function addAllowedDeveloper(address _developerOwner, bytes32 _nameHash) external
 ```
 
-ONLY OWNER: Add a new address that can create a new TSMRegistrar. Since ERS names have value we want them to commit to a name
-up front. The passed nameHash must be different than any other TSMRegistrar's nameHash and not bytes32(0).
+ONLY OWNER: Add a new address that can create a new DeveloperRegistrar.
 
 #### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _tsmOwner | address | Address that has the ability to create a new TSMRegistrar with the below nameHash |
-| _nameHash | bytes32 | Bytes32 hash of the ERS name the TSM wants for their Registrar |
+| _developerOwner | address | Address that has the ability to create a new DeveloperRegistrar |
+| _nameHash | bytes32 | Bytes32 hash of the ERS name the Developer wants for their Registrar |
 
-### removeAllowedTSM
+### removeAllowedDeveloper
 
 ```solidity
-function removeAllowedTSM(address _tsmOwner) external
+function removeAllowedDeveloper(address _developerOwner) external
 ```
 
-ONLY OWNER: Remove an address from creating a new TSMRegistrar.
+ONLY OWNER: Remove an address from creating a new DeveloperRegistrar.
 
 #### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _tsmOwner | address | Address that has the ability to create a new TSMRegistrar with the below nameHash |
+| _developerOwner | address | Address that has the ability to create a new DeveloperRegistrar |
 
 ### addRegistrarFactory
 
 ```solidity
-function addRegistrarFactory(contract ITSMRegistrarFactory _factory) external
+function addRegistrarFactory(IDeveloperRegistrarFactory _factory) external
 ```
 
-ONLY OWNER: Add a new TSMRegistrarFactory that can be used for creating new TSMRegistrars.
+ONLY OWNER: Add a new DeveloperRegistrarFactory that can be used for creating new DeveloperRegistrars.
 
 #### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _factory | contract ITSMRegistrarFactory | Address of TSMRegistrarFactory to add |
+| _factory | contract IDeveloperRegistrarFactory | Address of DeveloperRegistrarFactory to add |
 
 ### removeRegistrarFactory
 
 ```solidity
-function removeRegistrarFactory(contract ITSMRegistrarFactory _factory) external
+function removeRegistrarFactory(IDeveloperRegistrarFactory _factory) external
 ```
 
-ONLY OWNER: Remove a TSMRegistrarFactory so that it can't be used for creating new TSMRegistrars.
+ONLY OWNER: Remove a DeveloperRegistrarFactory.
 
 #### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _factory | contract ITSMRegistrarFactory | Address of TSMRegistrarFactory to add |
+| _factory | contract IDeveloperRegistrarFactory | Address of DeveloperRegistrarFactory to remove |
 
-### getTSMRegistrars
+### getDeveloperRegistrars
 
 ```solidity
-function getTSMRegistrars() external view returns (address[])
+function getDeveloperRegistrars() external view returns(address[] memory)
 ```
 
 ### _addRegistrarFactory
 
 ```solidity
-function _addRegistrarFactory(contract ITSMRegistrarFactory _factory) internal
+function _addRegistrarFactory(IDeveloperRegistrarFactory _factory) internal
 ```
-

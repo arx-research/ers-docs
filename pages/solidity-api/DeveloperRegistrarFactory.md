@@ -1,42 +1,52 @@
 # Solidity API
 
-## TSMRegistrarFactory
+## DeveloperRegistrarFactory
 
-Contract used to deploy new TSMRegistrars. Callable only by the TSMRegistry.
+Contract used to deploy new DeveloperRegistrars. Callable only by the DeveloperRegistry.
 
-### TSMRegistrarDeployed
+### DeveloperRegistrarDeployed
 
 ```solidity
-event TSMRegistrarDeployed(address tsmRegistrar, address owner)
+event DeveloperRegistrarDeployed(address indexed developerRegistrar)
 ```
 
-### chipRegistry
+### developerRegistrar
 
 ```solidity
-contract IChipRegistry chipRegistry
+address public immutable developerRegistrar
 ```
 
-### ers
+### developerRegistry
 
 ```solidity
-contract IERS ers
-```
-
-### tsmRegistry
-
-```solidity
-contract ITSMRegistry tsmRegistry
+IDeveloperRegistry public immutable developerRegistry
 ```
 
 ### constructor
 
 ```solidity
-constructor(contract IChipRegistry _chipRegistry, contract IERS _ers, contract ITSMRegistry _tsmRegistry) public
+constructor(address _developerRegistrar, IDeveloperRegistry _developerRegistry) public
 ```
 
-### deployRegistrar
+Constructor for DeveloperRegistrarFactory.
+
+#### Parameters
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| _developerRegistrar | address | Address of the DeveloperRegistrar to clone |
+| _developerRegistry | contract IDeveloperRegistry | DeveloperRegistry contract |
+
+### deployDeveloperRegistrar
 
 ```solidity
-function deployRegistrar(address _owner) external returns (address)
+function deployDeveloperRegistrar() external returns (address)
 ```
 
+ONLY DeveloperRegistry: Deploy a new DeveloperRegistrar contract.
+
+#### Return Values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | address | The address of the newly deployed DeveloperRegistrar |

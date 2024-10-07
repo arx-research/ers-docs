@@ -4,12 +4,7 @@
 
 Registry for tracking and maintaining relevant info for Manufacturers. In order to make chips valid for the
 protocol, manufacturers must register their chips in enrollments. Each enrollment will be assigned an id, which
-must be referenced when adding chips to the registry. Enrollments have a merkle root of all chipIds (addresses)
-that are valid for the enrollment. Manufacturer's can be found in three states:
-1. Unregistered: manufacturers[_manufacturerId].registered = false. This is the default state for all manufacturers.
-2. Registered: manufacturers[_manufacturerId].registered = true && manufacturers[_manufacturerId].owner != address(0).
-3. Read-only: manufacturers[_manufacturerId].registered = true && manufacturers[_manufacturerId].owner == address(0).
-   Once a manufacturerId has been put in this state it CANNOT leave it.
+must be referenced when adding chips to the registry.
 
 ### ManufacturerAdded
 
@@ -26,7 +21,7 @@ event ManufacturerRemoved(bytes32 manufacturerId)
 ### EnrollmentAdded
 
 ```solidity
-event EnrollmentAdded(bytes32 manufacturerId, bytes32 enrollmentId, bytes32 merkleRoot, address manufacturerCertSigner, address authModel, string chipValidationDataUri, string bootloaderApp, string chipModel)
+event EnrollmentAdded(bytes32 manufacturerId, bytes32 enrollmentId, address manufacturerCertSigner, address authModel, string chipValidationDataUri, string bootloaderApp, string chipModel)
 ```
 
 ### ManufacturerOwnerUpdated
@@ -40,7 +35,6 @@ event ManufacturerOwnerUpdated(bytes32 manufacturerId, address newOwner)
 ```solidity
 struct EnrollmentInfo {
   uint256 manufacturerId;
-  bytes32 merkleRoot;
   address manufacturerCertSigner;
   address authModel;
   string chipValidationDataUri;
@@ -84,7 +78,7 @@ mapping(bytes32 => struct ManufacturerRegistry.ManufacturerInfo) manufacturers
 constructor(address _governance) public
 ```
 
-_Constructor for ManufacturerRegistry. Sets owner to governance address._
+Constructor for ManufacturerRegistry. Sets owner to governance address.
 
 #### Parameters
 
@@ -95,18 +89,17 @@ _Constructor for ManufacturerRegistry. Sets owner to governance address._
 ### addChipEnrollment
 
 ```solidity
-function addChipEnrollment(bytes32 _manufacturerId, bytes32 _merkleRoot, address _certSigner, address _authModel, string _chipValidationDataUri, string _bootloaderApp, string _chipModel) external returns (bytes32 enrollmentId)
+function addChipEnrollment(bytes32 _manufacturerId, address _certSigner, address _authModel, string _chipValidationDataUri, string _bootloaderApp, string _chipModel) external returns (bytes32 enrollmentId)
 ```
 
-_ONLY MANUFACTURER: Adds a new enrollment for an active manufacturer. Enrollment is assigned an id which is returned. Only owner address
-associated with _manufacturerId can call this function. An "active" manufacturer is one with registered=true and a non-zero owner address._
+ONLY MANUFACTURER: Adds a new enrollment for an active manufacturer. Enrollment is assigned an id which is returned. Only owner address
+associated with _manufacturerId can call this function.
 
 #### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
 | _manufacturerId | bytes32 | Bytes32 identifier for manufacturer (i.e. could be hash of manufacturer name) |
-| _merkleRoot | bytes32 | Merkle root of all chipIds (addresses) that are valid for this enrollment |
 | _certSigner | address | Address of certificate signer for this enrollment |
 | _authModel | address | Address of contract that implements example signature validation for a chip |
 | _chipValidationDataUri | string | URI pointing to location of off-chain data required to validate chip is part of manufacturer enrollment |
@@ -125,9 +118,7 @@ associated with _manufacturerId can call this function. An "active" manufacturer
 function addManufacturer(bytes32 _manufacturerId, address _owner) external
 ```
 
-_ONLY OWNER: Registers a new manufacturer. Manufacturer is marked as registered forever once added so that history can't be mixed with
-other manufacturers. To burn access the owner param is set to the zero address (in removeManufacturer). A manufacturer is considered "new"
-if registered=false._
+ONLY OWNER: Registers a new manufacturer. Manufacturer is marked as registered forever once added.
 
 #### Parameters
 
@@ -142,9 +133,7 @@ if registered=false._
 function removeManufacturer(bytes32 _manufacturerId) external
 ```
 
-_ONLY OWNER: Removes an active manufacturer putting their history in read-only mode. In order to remove access we burn the owner key,
-this prevents history from being mixed in case a new manufacturer accidentally wants to use an old ID (it would revert and they would
-need to choose an new ID)._
+ONLY OWNER: Removes an active manufacturer, putting their history in read-only mode.
 
 #### Parameters
 
@@ -158,32 +147,37 @@ need to choose an new ID)._
 function updateManufacturerOwner(bytes32 _manufacturerId, address _newOwner) external
 ```
 
-_ONLY MANUFACTURER: Updates the owner address for a manufacturer. Only owner address associated with _manufacturerId can call this
-function._
+ONLY MANUFACTURER: Updates the owner address for a manufacturer.
 
 #### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _manufacturerId | bytes32 | Bytes32 identifier for manufacturer (i.e. could be hash of manufacturer name) |
+| _manufacturerId | bytes32 | Bytes32 identifier for manufacturer |
 | _newOwner | address | Address of new owner |
 
 ### isEnrolledChip
 
 ```solidity
-function isEnrolledChip(bytes32 _enrollmentId, uint256 _index, address _chipId, bytes32[] _merkleProof) external view returns (bool)
+function isEnrolledChip(bytes32 _enrollmentId, address _chipId, bytes calldata _manufacturerCertificate, bytes calldata _payload) external view returns (bool)
 ```
 
-_Validate that _chipId is included in the merkle tree for _enrollmentId._
+Validate that _chipId is included in the enrollment.
 
 #### Parameters
 
 | Name | Type | Description |
 | ---- | ---- | ----------- |
-| _enrollmentId | bytes32 | bytes32 identifier of the manaufacturer enrollment |
-| _index | uint256 | Index of enrollment in the merkle tree |
+| _enrollmentId | bytes32 | Bytes32 identifier of the manufacturer enrollment |
 | _chipId | address | Public key associated with the chip |
-| _merkleProof | bytes32[] | Merkle Proof for _chipId's inclusion in _enrollmentId |
+| _manufacturerCertificate | bytes | Manufacturer certificate for the chip |
+| _payload | bytes | Additional data required for verification |
+
+#### Return Values
+
+| Name | Type | Description |
+| ---- | ---- | ----------- |
+| [0] | bool | Bool indicating whether the chip is valid |
 
 ### getManufacturerInfo
 
@@ -202,4 +196,3 @@ function getEnrollmentInfo(bytes32 _enrollmentId) public view returns (struct Ma
 ```solidity
 function getEnrollmentBootloaderApp(bytes32 _enrollmentId) external view returns (string)
 ```
-
