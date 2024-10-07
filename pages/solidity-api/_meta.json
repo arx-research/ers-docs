@@ -1,6 +1,5 @@
 {
     "intro": "Intro",
-    "ArxProjectEnrollmentManager": "ArxProjectEnrollmentManager",
     "ChipRegistry": "ChipRegistry",
     "ERSRegistry": "ERSRegistry",
     "ManufacturerRegistry": "ManufacturerRegistry",
@@ -10,4 +9,5 @@
     "DeveloperRegistrarFactory": "DeveloperRegistrarFactory",
     "project-registrars": " Project Registrars",
     "token": "PBT"
+
 }
