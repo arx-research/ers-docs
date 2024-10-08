@@ -8,7 +8,7 @@ Per [EIP-5791](https://eips.ethereum.org/EIPS/eip-5791), the PBT was developed t
 PBTs look to solve these problems and help usher in a new form of tokenized custody.
 
 ## Minting PBTs
-Ultimately how PBTs are minted or given to chip holders is up to the `ProjectRegistrar` implementation. For the purposes of ERS, tokens are minted upon the addition of chips to a project. End users holding a chips may subsequently transfer or claim a chip (see [Chip Claiming](chip-claim.md)).
+Ultimately how PBTs are minted or given to chip holders is up to the `ProjectRegistrar` implementation. For the purposes of ERS, tokens are minted upon the addition of chips to a project. End users holding a chips may subsequently transfer or claim a chip (see [Chip Transfer](chip-transfer.md)).
 
 ## Transferring PBTs
 The main difference between PBTs and standard ERC-721s is how they are transferred. Most ERC-721s are easily transferred by a simple on-chain call directly to the token contract or via `transferFrom` using an intermediary contract. PBTs have a more restricted transfer mechanism due to their physical backing. For PBTs there are two forms of transfer:

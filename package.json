@@ -1,7 +1,7 @@
 {
   "name": "ers-docs",
-  "version": "0.0.1",
-  "description": "Docs for interacting with and understanding the Ethereum Reality Service (ERS)",
+  "version": "2.0.0",
+  "description": "Documentation for interacting with and understanding the Ethereum Reality Service (ERS)",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

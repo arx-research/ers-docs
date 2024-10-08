@@ -7,9 +7,9 @@ _If you are trying to execute a transaction it is assumed that you have also rea
 To be able to create a service you first need to specify the Ethereum account you want to call `createService`, note that this address will be set as the "owner" of the service however that can be changed post-creation. To do this, you must input the private key of the account you wish to use into the `.env` file. The `.env` file should look something like this:
 ```
 ...
-GOERLI_SERVICE_CREATOR_PRIVATE_KEY=ac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
+TESTNET_SERVICE_CREATOR_PRIVATE_KEY=ac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
 ...
-MAINNET_SERVICE_CREATOR_PRIVATE_KEY=ac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
+BASE_SERVICE_CREATOR_PRIVATE_KEY=ac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80
 ```
 Replace the stand-in private keys (pulled from Hardhat) with the private key you wish to use. Make sure that you are using the correct private key for the __network__ you are deploying to.
 
