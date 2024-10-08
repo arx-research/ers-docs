@@ -1,5 +1,5 @@
 # Creating A Project
-This section details how to create a project using the `ers-scripts` repo.
+This section details how to create a project and add chips using the `ers-scripts` repo.
 
 ## Set Up
 _If you are trying to execute a transaction it is assumed that you have also read the [Set Up](setup.md) section. If you are just looking for an example read on_
@@ -28,6 +28,63 @@ This script will prompt you for several pieces of information:
 
 You will be prompted to scan a QR code on your NFC-enabled smartphone; scan the QR code on your smartphone and follow the prompts to capture chip proof data. You can scan your chip by tapping it to the NFC reader on the back of your smartphone.
 
+### Project Creation
+When creating a project the script will prompt for a name and deploy the new project:
+```typescript
+const projectRegistrarDeploy = await deploy("PBTSimpleProjectRegistrar", {
+    from: developerOwner,
+    args: [
+        getDeployedContractAddress(hre.network.name, "ChipRegistry"),
+        getDeployedContractAddress(hre.network.name, "ERSRegistry"),
+        params.developerRegistrar,
+        params.name,
+        params.tokenSymbol,
+        params.tokenUriRoot,
+        params.lockinPeriod,
+        getDeployedContractAddress(hre.network.name, "OpenTransferPolicy"),
+    ],
+});
+```
+Next, the script will add the resulting project address to your `DeveloperRegistrar`:
+```typescript
+const developerRegistrar = new DeveloperRegistrar__factory(await hre.ethers.getSigner(developerOwner)).attach(params.developerRegistrar);
+await hre.deployments.rawTx({
+    from: developerOwner,
+    to: params.developerRegistrar,
+    data: developerRegistrar.interface.encodeFunctionData(
+        "addProject",
+        [
+            projectRegistrarDeploy.address,
+            calculateLabelHash(params.name),
+            params.serviceId,
+            params.lockinPeriod,
+        ]
+    )
+});
+```
+
+### Chip Addition
+Once a project has been created -- or if a preexisting project has been provided -- chip information will subsequently be added to the project:
+```typescript
+await rawTx({
+    from: developerOwner,
+    to: projectRegistrarAddress,
+    data: projectRegistrar.interface.encodeFunctionData(
+    "addChips",
+    [
+        chipInfo.map((chip) => {
+        return {
+            chipId: chip.chipId,
+            chipOwner: developerOwner,
+            nameHash: calculateLabelHash(chip.chipId),
+            manufacturerValidation: chip.manufacturerValidation,
+            custodyProof: ownershipProofs.shift(),
+        } as ProjectChipAddition
+        }),
+    ]
+    )
+});
+```
 
 Note: If you are creating `tokenUri` data from a formatted CSV, make sure that you backup `task_outputs`. When chips are added to an existing project, `task_outputs` will be used to ensure that metadata from previously added chips is included in the final `tokenUri` data. If this data is missing, metadata with previously enrollment chips will be overwritten and their `tokenUri` will not resolve when looked up. 
 

@@ -17,15 +17,5 @@ Once the Developer has their `DeveloperRegistrar` deployed they can begin adding
         bytes32 _serviceId,
         uint256 _lockinPeriod
 
-## Adding Projects
-In order to add a project the following information must be provided:
-- **Project Registrar**: The address of the project's registrar. This is the contract that will be used to manage the project's chips. End-users will go here to claim their chips. The registrar must implement the `ProjectRegistrar` interface.
-- **Name Hash**: The hash of the project's name. This is used to ensure that the project name is unique, and creates the `[project].developer.ers` name for the project.
-- **Service ID**: The primary `_serviceId` associated with the project and any chips deployed through the project.
-- **Lock In Period**: The amount of time any chip within a project is locked to the primary service associated with that project. After this time end users may modify the associated service.
-
-Once a project has been added you can see the project's information by calling `projectEnrollments` on the `ChipRegistry` and passing in the `ProjectRegistrar` address of the project. Additionally, this opens up the ability for Developers to `addChips` to a project which in turn may be claimed by end users.
-
-## Example: Creating a Project
-For an example of creating a project see [Creating A Project](../../scripts/create-project.md) section in our scripts documentation.
+Through projects, developers can in turn `addChips`, which in turn creates an immutable link from chip to developer and project.
 

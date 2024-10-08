@@ -1,5 +1,5 @@
 # Transferring A Chip
-This section details how to transfer a chip using the `ers-scripts` repo.
+This section details how to transfer a chip using the `ers-scripts` repo. This assumes usage of the `PBTSimpleProjectRegistrar` which is what the `createProject` script uses by default.
 
 ## Set Up
 _If you are trying to execute a transaction it is assumed that you have also read the [Set Up](setup.md) section. If you are just looking for an example read on_
@@ -22,6 +22,25 @@ Arguments:
 yarn transferToken --network [network]
 ```
 
-You will be prompted by a QR code scanner to scan the chip to first get the `chipId` and subsequently again to create a `transferToken` signature. The signature will contain the address assocaited with the owner key specified in the Setup section above. Scan the QR code on your smartphone and follow the prompts to capture chip data. You can scan your chip by tapping it to the NFC reader on the back of your smartphone.
+You will be prompted by a QR code scanner to scan the chip to first get the `chipId` and subsequently again to create a `transferToken` signature. The signature will contain the address associated with the owner key specified in the Setup section above. Scan the QR code on your smartphone and follow the prompts to capture chip data. You can scan your chip by tapping it to the NFC reader on the back of your smartphone.
+
+Once scanned, the resulting ownership proof and new chip owner address will be submitted:
+```typescript
+    await rawTx({
+      from: chipOwner,
+      to: projectRegistrar.address,
+      data: projectRegistrar.interface.encodeFunctionData(
+        "transferToken",
+        [
+          chipOwner,
+          params.chipId,
+          chipOwnershipProof,
+          commitBlock.number,
+          false,
+          "0x" // Assuming payload is empty; change if necessary
+        ]
+      )
+    });
+```
 
 Upon successful submission of the chip signature to the `transferToken`, the new owner of the chip should be reflected through ERS.
