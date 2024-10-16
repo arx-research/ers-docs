@@ -16,9 +16,9 @@ Replace the stand-in private keys (pulled from Hardhat) with the private key you
 ## Executing the Script
 The script to create a service is located in `tasks/serviceCreation.ts`. To execute the script run:
 ```bash
-yarn createService --network [network] --service-name [name] --content [content] --append-id [true/false]
+yarn createService --network [network]
 ```
-Where: 
+You will be prompted for several pieces of information:
 - __service-name__ is the name you wish to give your service, each name must be unique so if it has been chosen previously it will revert
 - __content__ is an https or ipfs address of the content you wish to tie to the chips enrolled in the service
 - __append-id__ is a boolean that determines whether or not the chipId will be appended to the end of the content string
