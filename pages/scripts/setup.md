@@ -19,7 +19,6 @@ Finally, fill out the `REQUIRED` fields in `.env`. You will need few accounts (a
     - A [Filebase](https://filebase.com/) account in order to create tokenUri data for projects and upload content (may not be required in all cases, but highly recommended)
     - An [Alchemy](https://www.alchemy.com/) account to carry out RPC commands (or you can set up a custom RPC in `hardhat.config.ts`).
     - Private keys for the different roles, e.g. Developer and Service Creator. Make sure the associated accounts are funded to cover contract deployment and calling contract functions.
-```
 
 The private keys in the file are the default private keys used for local testing using Hardhat. __DO NOT USE THESE KEYS FOR ANY PUBLIC BLOCKCHAIN ACTIONS.__ We will note in this tutorial when to edit the private key portions of the `.env` file.
 
