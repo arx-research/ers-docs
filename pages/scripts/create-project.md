@@ -13,6 +13,10 @@ BASE_DEVELOPER_OWNER_PRIVATE_KEY=ac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5ef
 ```
 Replace the stand-in private keys (pulled from Hardhat) with the private key you wish to use. Make sure that you are using the correct private key for the __network__ you are deploying to.
 
+If you wish to add rich metadata to your chips -- a name, description, images, etc. -- then the script can read from input data to do this. See `Defining Script Inputs` below for more information on how to set up a CSV file which references local content that you want to associate with chips. In turn, you will be prompted to scan each chip associated with this data.
+
+The CSV data can also be used to input existing developer proofs which have already been captured by some other means (saving you from having to tap each chip again to collect this information).
+
 ## Usage
 Arguments:
 `network`: The network you want to interact with (defaults to `hardhat`)
@@ -23,8 +27,8 @@ yarn createProject --network [network]
 
 This script will prompt you for several pieces of information:
 1. Whether or not you wish to create a new project or add chips to an existing project; if you select an existing project, artifacts in `task_outputs` will be used to suggest options or you can manually enter the address of an existing project. (both cases will be chain specific based on the `network` argument)
-2. How you would like to add `tokenUri` data: via a formatted CSV, using an existing URL, or skip. (this can be updated after contract deployment)
-3. If you are on `localhost`, you will be prompted to select a manufacturer enrollment as well. For other chains this information comes from the hosted Arx enrollment data on Supabase.
+2. How you would like to add `tokenUri` data: via a formatted CSV, using an existing URL, or skip. (this can be updated after contract deployment; see `Defining Script Inputs` below for more information on how this script can help generate `tokenUri` data)
+3. If you are on `localhost`, you will be prompted to select a manufacturer enrollment as well. For all other chains this information is automatically retrieved from the hosted Arx enrollment data on Supabase.
 
 You will be prompted to scan a QR code on your NFC-enabled smartphone; scan the QR code on your smartphone and follow the prompts to capture chip proof data. You can scan your chip by tapping it to the NFC reader on the back of your smartphone.
 

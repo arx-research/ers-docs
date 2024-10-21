@@ -13,6 +13,8 @@ BASE_SERVICE_CREATOR_PRIVATE_KEY=ac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5ef
 ```
 Replace the stand-in private keys (pulled from Hardhat) with the private key you wish to use. Make sure that you are using the correct private key for the __network__ you are deploying to.
 
+Most Developers deploying Projects will also create their own Services, so this key will typically be the same as the Developer key.
+
 ## Executing the Script
 The script to create a service is located in `tasks/serviceCreation.ts`. To execute the script run:
 ```bash
@@ -21,7 +23,7 @@ yarn createService --network [network]
 You will be prompted for several pieces of information:
 - __service-name__ is the name you wish to give your service, each name must be unique so if it has been chosen previously it will revert
 - __content__ is an https or ipfs address of the content you wish to tie to the chips enrolled in the service
-- __append-id__ is a boolean that determines whether or not the chipId will be appended to the end of the content string
+- __append-id__ is a boolean that determines whether or not the chipId will be appended to the end of the content string (useful for `tokenUri` data hosted in a directory or in IPFS)
 
 When the script is run the `service-name` is transformed into a `bytes32` representation that is used as the `serviceId` for the service like so:
 ```typescript

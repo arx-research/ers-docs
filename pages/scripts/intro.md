@@ -4,7 +4,7 @@ This section covers how to interact with the ERS system using the [ERS Scripts R
 - Deploying a Developer Project Registrar
 - Creating a Service
 - Creating a Project
-- Chip Transfers
+- Transferring Ownership of a Chip
 
 Additional these scripts can be used locally to create and simulate manufacturers and manufacturer enrollments.
 
