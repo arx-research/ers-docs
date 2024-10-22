@@ -1,8 +1,10 @@
 # Getting Set Up
 
+`ers-scripts` expects `git`,`node` 20.5.0+ and the [yarn](https://classic.yarnpkg.com/lang/en/docs/install) package manager.
+
 Clone `ers-scripts` repo, install dependencies and build `artifacts`:
 ```bash
-git clone git@github.com:arx-research/ers-scripts.git
+git clone https://github.com/arx-research/ers-scripts.git
 cd ers-scripts
 npm install yarn --global
 yarn
