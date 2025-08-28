@@ -12,14 +12,3 @@ Practically, this means that
 ERS leverages a combination of attestations, a namespace and binding enrollments to achieve these properties for users. ERS is comprised of `Manufacturers` who enroll chips and `Developers` who create `Projects`.
 
 ERS is deployed on Base and Sepolia for testing.
-
-## Getting Started
-
-Ready to add chips to ERS? The [Scripts section](../scripts/intro.md) provides step-by-step guides and command-line tools to:
-
-- Set up your development environment
-- Claim a developer name in the .ers namespace  
-- Create services and projects
-- Enroll chips and bind them to your applications
-
-Start with the [Scripts Setup Guide](../scripts/setup.md) to begin adding chips to the ERS protocol.
