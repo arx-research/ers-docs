@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(for file in deployments/base/{ERSRegistry,ChipRegistry,DeveloperRegistry,ServicesRegistry,ManufacturerRegistry}.json)",
+      "Bash(jq:*)",
+      "Bash(done)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

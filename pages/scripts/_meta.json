@@ -4,5 +4,6 @@
     "claim-name": "Claim A Developer Name",
     "create-service": "Create a Service",
     "create-project": "Create a Project",
+    "add-project-to-registrar": "Add Project to Registrar",
     "chip-transfer": "Transfer a Chip"
 }
