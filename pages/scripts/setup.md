@@ -40,4 +40,8 @@ Note: `ers-scripts` expects you have `git`, `node` and the [yarn](https://classi
 
 Visit the [ERS Discord](https://discord.com/invite/B2ReZXnt2v) for further assistance or open an issue.
 
+## Network Selection
+
+The primary ERS deployment is on **Base mainnet**. For production use, specify `--network base` in your commands. For development and testing, use `--network sepolia`.
+
 See the `ers-scripts` [README](https://github.com/arx-research/ers-scripts/blob/master/README.md) for more information on using a `localhost` chain for local development and testing purposes (not usually recommended, typically Sepolia is best for testing).

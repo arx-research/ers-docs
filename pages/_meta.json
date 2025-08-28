@@ -1,8 +1,8 @@
 {
   "index": "Home",
   "overview": "Overview",
-  "solidity-api": "Contracts",
   "scripts": "Scripts",
+  "solidity-api": "Contracts",
   "contact": {
     "title": "Contact ↗",
     "type": "page",

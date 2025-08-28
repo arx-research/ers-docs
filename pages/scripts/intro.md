@@ -12,14 +12,8 @@ Additional these scripts can be used locally to create and simulate manufacturer
 
 Before using this repo it is suggested to review the [Overview](../overview/intro.md) of the ERS protocol.
 
-## Base Mainnet Deployment
+## Deployment Information
 
-The primary ERS deployment is live on Base mainnet with the following core contract addresses:
+The primary ERS deployment is on **Base mainnet** (use `--network base` for production). For development and testing, use Sepolia testnet (`--network sepolia`). 
 
-- **ERSRegistry**: `0xB680dD0fCA4ea30d8C2cc5F07C5087eBA5366E5e`
-- **ChipRegistry**: `0xbbB1c125A8eA6feabD6524953cB4b8CD876345ED` 
-- **DeveloperRegistry**: `0x9Eb8550d62457B17DFF95606b4064afEc72585d8`
-- **ServicesRegistry**: `0x4CA723223c120CE3aAe453ee9CDffB8F724FE274`
-- **ManufacturerRegistry**: `0xffC5B00E5E534E35D9611278600b1A10df7C83e8`
-
-For testing purposes, Sepolia testnet deployments are available in the [ers-scripts deployments folder](https://github.com/arx-research/ers-scripts/tree/main/deployments).
+These scripts interact with the deployed ERS contracts. See the [Solidity API introduction](../solidity-api/intro.md) for contract addresses and detailed API documentation.

@@ -1,3 +1,4 @@
 {
+    "BaseProjectRegistrar": "BaseProjectRegistrar",
     "PBTSimpleProjectRegistrar": "PBTSimpleProjectRegistrar"
 }
