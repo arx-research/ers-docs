@@ -35,3 +35,40 @@ The script will verify that the ProjectRegistrar belongs to the specified Develo
 - A project was deployed successfully but failed to be added to your DeveloperRegistrar
 - You need to manually associate an existing project with a different service or update project metadata
 - Troubleshooting deployment issues where the project creation partially failed
+
+## Example
+
+Here's what the CLI interaction looks like when running `yarn addProjectToRegistrar --network sepolia`:
+
+```bash
+$ yarn addProjectToRegistrar --network sepolia
+
+This task allows you to manually add an existing project to a DeveloperRegistrar.
+Use this when a project was created but failed to be added to the registrar.
+
+What is the address of your DeveloperRegistrar? 0x9876543210987654321098765432109876543210
+
+What is the address of the existing ProjectRegistrar? 0x5678901234567890123456789012345678901234
+
+✓ ProjectRegistrar verified and belongs to the specified DeveloperRegistrar
+
+What name would you like to give this project? MyBrandNFT
+
+Which service ID would you like to set as primary service for your project enrollment? 0x4d794272616e64417070000000000000000000000000000000000000000000
+
+What lockin period (in seconds) would you like to set? 86400
+
+Project Details:
+- Project Name: MyBrandNFT
+- Project Registrar: 0x5678901234567890123456789012345678901234
+- Developer Registrar: 0x9876543210987654321098765432109876543210  
+- Service ID: 0x4d794272616e64417070000000000000000000000000000000000000000000
+- Lockin Period: 86400 seconds
+
+Do you want to proceed with adding this project? (y/n): y
+
+Adding project to DeveloperRegistrar...
+✓ Project "MyBrandNFT" successfully added to DeveloperRegistrar
+  Project Registrar: 0x5678901234567890123456789012345678901234
+  Developer Registrar: 0x9876543210987654321098765432109876543210
+```

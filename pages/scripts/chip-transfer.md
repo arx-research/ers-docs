@@ -44,3 +44,33 @@ Once scanned, the resulting ownership proof and new chip owner address will be s
 ```
 
 Upon successful submission of the chip signature to the `transferToken`, the new owner of the chip should be reflected through ERS.
+
+## Example
+
+Here's what the CLI interaction looks like when running `yarn transferToken --network sepolia`:
+
+```bash
+$ yarn transferToken --network sepolia
+
+📱 Please scan the QR code with your NFC-enabled smartphone to get the chip ID.
+[QR Code displayed]
+
+✓ Chip scanned successfully!
+Chip ID: 0xabc123def456...
+Project Registrar: 0x5678901234567890123456789012345678901234
+
+📱 Please scan the chip again to create a transfer signature for the new owner.
+[QR Code displayed]
+
+✓ Transfer signature captured!
+New Owner: 0x9876543210987654321098765432109876543210
+
+Submitting transfer with the following details:
+- Chip ID: 0xabc123def456...
+- New Owner: 0x9876543210987654321098765432109876543210
+- Project Registrar: 0x5678901234567890123456789012345678901234
+
+✓ Chip ownership transferred successfully!
+Transaction: 0x456789abc123...
+The chip now belongs to: 0x9876543210987654321098765432109876543210
+```

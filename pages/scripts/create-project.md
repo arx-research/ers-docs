@@ -114,3 +114,45 @@ edition,chipId,name,description,media_uri,media_mime_type,developerProof,project
 - `projectRegistrar` - the projectRegistrar if already captured
 - `notes` - nodes for Developer usage
 
+## Example
+
+Here's what the CLI interaction looks like when running `yarn createProject --network sepolia`:
+
+```bash
+$ yarn createProject --network sepolia
+
+Would you like to add chips to an existing project or create a new one?
+1: Create a new project
+2: Use an existing project
+Enter your choice (1 or 2): 1
+
+What name would you like to give your project? MyBrandNFT
+
+How would you like to add chip and tokenURI data? (chip metadata like name, image, descriptions, etc.)
+1: Skip (tokenUri can be updated after project deployment).
+2: Input from CSV file
+3: Use existing URL for all chips
+Enter your choice (1, 2, or 3): 2
+
+Please provide the path to your CSV file: ./task_params/myproject.csv
+
+Which service ID would you like to set as primary service for your project enrollment? 0x4d794272616e64417070000000000000000000000000000000000000000000
+
+📱 Please scan the QR code with your NFC-enabled smartphone to capture chip data.
+[QR Code displayed]
+
+✓ Chip scanned successfully!
+Chip ID: 0xabc123def456...
+
+Do you want to scan another chip? (y/n): n
+
+Creating project with the following details:
+- Project Name: MyBrandNFT  
+- Service ID: 0x4d794272616e64417070000000000000000000000000000000000000000000
+- Chips Added: 1
+
+✓ Project created successfully!
+Transaction: 0xdef789abc123...
+Project Registrar Address: 0x5678901234567890123456789012345678901234
+```
+

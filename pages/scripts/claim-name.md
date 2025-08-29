@@ -60,3 +60,26 @@ Once a name approval proof has successfully been generated the script will deplo
 ```
 
 With a developer registrar in place a developer may deploy projects and in turn add chips to their namespace.
+
+## Example
+
+Here's what the CLI interaction looks like when running `yarn createDeveloperRegistrar --network sepolia`:
+
+```bash
+$ yarn createDeveloperRegistrar --network sepolia
+What name would you like to register as a developer? In ERS this will create a subnode with the path [name].ers. mybrand
+
+Has this name been manually approved? (y/n, default: n) n
+
+Checking name availability with name.ers.run...
+✓ Name "mybrand" is available!
+
+Creating developer registrar with the following details:
+- Developer Name: mybrand
+- Developer Address: 0x1234567890123456789012345678901234567890
+- ERS Namespace: mybrand.ers
+
+✓ Developer registrar created successfully!
+Transaction: 0xabcdef1234567890...
+Developer Registrar Address: 0x9876543210987654321098765432109876543210
+```

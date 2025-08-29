@@ -52,3 +52,26 @@ The `ServiceRecord` struct and the `serviceId` are then passed to the smart cont
     });
 ```
 
+## Example
+
+Here's what the CLI interaction looks like when running `yarn createService --network sepolia`:
+
+```bash
+$ yarn createService --network sepolia
+What would you like to name the service? MyBrandApp
+
+What root URL or URI would you like to redirect chips enrolled in this service to? https://app.mybrand.com
+
+Do you want to append chip IDs to the end of your root URI/URL (e.g. ipfs.com/0x123/$chipId)? Doing so allows you to create personalized tokenUri data for each chip (yes/no) yes
+
+Creating service with the following details:
+- Service Name: MyBrandApp
+- Service ID: 0x4d794272616e64417070000000000000000000000000000000000000000000
+- Content: https://app.mybrand.com/
+- Append ID: true
+
+✓ Service created successfully!
+Transaction: 0x1234567890abcdef...
+Service ID: 0x4d794272616e64417070000000000000000000000000000000000000000000
+```
+
